@@ -10,6 +10,15 @@ Idea
 
 You need to bow to start the game and you end it by bowing.
 
+[Diversifiers](http://globalgamejam.org/news/ggj16-diversifiers-are)
+--------------------------------------------------------------------
+
+ * No retreat, no surrender
+ * One hand tied behind my back
+ * Story Mode
+ * Infinite
+ * Loudmouth
+
 Screenshots
 -----------
 
