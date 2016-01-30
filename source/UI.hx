@@ -32,7 +32,7 @@ class UI extends FlxTypedGroup<FlxSprite>
 
     public function updateUI():Void
     {
-        _score.text = Std.string(Reg.score);
+        _score.text = Std.string(Reg.getScore()) + " / " + Std.string(Reg.getHighScore());
         _score.screenCenter();
         _score.y = 5;
     }

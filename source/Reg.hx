@@ -28,7 +28,29 @@ class Reg
 	 * Generic score variable that can be used for cross-state stuff.
 	 * Example usage: Storing the current score.
 	 */
-	public static var score:Int = 0;
+	private static var score:Int = 0;
+	private static var highScore:Int = 0;
+
+	public static function getScore() {
+		return score;
+	}
+	public static function getHighScore() {
+		return highScore;
+	}
+
+	public static function setScore(s:Int) {
+		score = s;
+		if (score > highScore) {
+			highScore = score;
+		}
+	}
+	public static function addScore(amount:Int) {
+		setScore(getScore() + amount);
+	}
+	public static function removeScore(amount:Int) {
+		setScore(getScore() - amount);
+	}
+
 	public static var MAX_SCORE:Int = 2147431337;
 	/**
 	 * Generic bucket for storing different FlxSaves.
