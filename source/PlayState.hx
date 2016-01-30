@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxRandom;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -20,6 +21,7 @@ class PlayState extends FlxState
     private var map:GameMap;
     private var player:BlackBelt;
     private var spawner:StudentSpawner;
+    private var ui:UI;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -36,12 +38,17 @@ class PlayState extends FlxState
         }
         add(this.map);
 
+        this.spawner = new StudentSpawner();
+        spawner.screenCenter();
+        add(this.spawner);
+
         this.player = new BlackBelt("80");
         this.player.screenCenter();
         this.player.y = 632 + 150;
         add(this.player);
 
-        this.spawner = new StudentSpawner();
+        ui = new UI();
+        add(ui);
 
         super.create();
 	}
@@ -60,12 +67,36 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+        // Ending condition
         if (this.player.hasBowed) {
             this.player.hasBowed = false;
             FlxG.sound.play("assets/sounds/yame.wav");
             var timer = new FlxTimer();
             timer.start(3.0, endGame);
         }
+
+        // Spawn students
+        if (FlxRandom.floatRanged(0.0, 1.0) > 0.995) {
+            var colorRand:Int = FlxRandom.intRanged(1, 10);
+            if (colorRand > 6) {
+                this.spawner.spawn("yellow");
+            } else if (colorRand > 4) {
+                this.spawner.spawn("orange");
+            } else if (colorRand > 3) {
+                this.spawner.spawn("green");
+            } else if (colorRand > 1) {
+                this.spawner.spawn("blue");
+            } else if (colorRand > 0) {
+                this.spawner.spawn("brown");
+            }
+        }
+
+        if (Reg.score < 0) {
+            Reg.score = 0;
+        } else if (Reg.score > Reg.MAX_SCORE) {
+            Reg.score = Reg.MAX_SCORE;
+        }
+        this.ui.updateUI();
 
 		super.update();
 	}
