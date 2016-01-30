@@ -19,6 +19,7 @@ class PlayState extends FlxState
 
     private var map:GameMap;
     private var player:BlackBelt;
+    private var spawner:StudentSpawner;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -30,12 +31,17 @@ class PlayState extends FlxState
 
         this.map = new GameMap();
         this.map.screenCenter();
+        for (tree in this.map.trees.group.members) {
+            tree.initializePosition();
+        }
         add(this.map);
 
         this.player = new BlackBelt("80");
         this.player.screenCenter();
         this.player.y = 632 + 150;
         add(this.player);
+
+        this.spawner = new StudentSpawner();
 
         super.create();
 	}

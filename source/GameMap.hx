@@ -8,7 +8,7 @@ class GameMap extends FlxSpriteGroup
     private var ground:Ground;
     private var streetMarker:StreetMarker;
     private var sky:Sky;
-    private var trees:TreeManager;
+    public var trees:TreeManager;
 
     public function new()
     {

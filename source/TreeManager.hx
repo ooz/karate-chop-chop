@@ -1,19 +1,17 @@
 package;
 
 import flixel.FlxSprite;
-import flixel.group.FlxSpriteGroup;
+import flixel.group.FlxTypedSpriteGroup;
 import flixel.util.FlxRandom;
 import flixel.FlxG;
 
-class TreeManager extends FlxSpriteGroup
+class TreeManager extends FlxTypedSpriteGroup<Tree>
 {
     private var numTrees = 15;
     private var spawntimes:Array<Int>;
     public function new()
     {
         super();
-        x = 0;
-        y = 0;
 
         this.spawntimes = new Array<Int>();
         for (i in 0...numTrees) {

@@ -4,6 +4,7 @@ import flixel.util.FlxPoint;
 import Std.int;
 import flixel.FlxSprite;
 import flixel.util.FlxRandom;
+using flixel.util.FlxSpriteUtil;
 
 class Tree extends FlxSprite
 {
@@ -20,16 +21,15 @@ class Tree extends FlxSprite
         this.initial_spawntime = initialSpawntime;
         this.spawntime = this.initial_spawntime;
         this.left = FlxRandom.intRanged(0, 1) == 1;
-
-        initializePosition();
     }
 
-    private function initializePosition():Void
+    public function initializePosition():Void
     {
+        this.screenCenter();
         if (this.left) {
-            this.x = FlxRandom.intRanged(0, 150 - this.frameWidth);
+            this.x -= FlxRandom.intRanged(138 + Std.int(this.frameWidth / 2.0), Std.int(288 - (this.frameWidth / 2.0)));
         } else {
-            this.x = FlxRandom.intRanged(426, 576 - this.frameWidth);
+            this.x += FlxRandom.intRanged(138 + Std.int(this.frameWidth / 2.0), Std.int(288 - (this.frameWidth / 2.0)));
         }
         this.velocity.x = 0.0;
         this.velocity.y = 0.0;
@@ -39,7 +39,7 @@ class Tree extends FlxSprite
 
     override public function update():Void
     {
-        if (this.spawntime < 0) {
+        if (this.spawntime <= 0) {
             this.spawntime = 0;
             this.velocity.y = 39.0 * this.speedFactor;
             if (this.left) {
@@ -50,6 +50,7 @@ class Tree extends FlxSprite
         } else {
             this.spawntime -= 1;
             var scaleFactor:Float = this.initialScale + (1.0 - this.initialScale) * (this.initial_spawntime - this.spawntime) / this.initial_spawntime;
+            this.y = 632 + 1 - this.height + this.height * (1.0 - scaleFactor) / 2.0;
             this.scale = new FlxPoint(scaleFactor, scaleFactor);
         }
 
