@@ -32,18 +32,6 @@ class BlackBelt extends FlxSpriteGroup
         this.bot.loadGraphic("assets/images/black_back_" + this.size + ".png");
         this.bot.y = this.bot.frameHeight;
         add(this.bot);
-
-        MouseEventManager.add(this, onDown, onUp, null, null);
-    }
-
-    private function onDown(Sprite:FlxSprite)
-    {
-        this.mouseDown = true;
-    }
-
-    private function onUp(Sprite:FlxSprite)
-    {
-        this.mouseDown = false;
     }
 
     public function setFrontFacing():Void
@@ -60,6 +48,22 @@ class BlackBelt extends FlxSpriteGroup
 
     override public function update():Void
     {
+        if (FlxG.mouse.justPressed)
+        {
+            if (FlxG.mouse.x >= this.x && (FlxG.mouse.x <= (this.x + this.width)) && FlxG.mouse.y >= this.y - 47 && (FlxG.mouse.y <= (this.y + this.height - 47))) {
+                this.mouseDown = true;
+            }
+//            trace("Mouse: " + Std.string(FlxG.mouse.x) + " " + Std.string(FlxG.mouse.y));
+//            trace("Thiss: " + Std.string(this.x) + " " + Std.string(this.y) + " " + Std.string(this.width) + " " + Std.string(this.height));
+        }
+
+        if (FlxG.mouse.justReleased)
+        {
+            if (FlxG.mouse.x >= this.x && (FlxG.mouse.x <= (this.x + this.width)) && FlxG.mouse.y >= this.y - 47 && (FlxG.mouse.y <= (this.y + this.height - 47))) {
+                this.mouseDown = false;
+            }
+        }
+
         if (this.mouseDown && FlxG.mouse.pressed) {
             this.isBowing = true;
             if (this.top.y > FlxG.mouse.y) {
@@ -92,7 +96,7 @@ class BlackBelt extends FlxSpriteGroup
     {
         this.top = null;
         this.bot = null;
-        MouseEventManager.remove(this);
+
         super.destroy();
     }
 

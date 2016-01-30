@@ -101,10 +101,10 @@ class PlayState extends FlxState
             }
         }
 
-        if (Reg.score < 0) {
-            Reg.score = 0;
-        } else if (Reg.score > Reg.MAX_SCORE) {
-            Reg.score = Reg.MAX_SCORE;
+        if (Reg.getScore() < 0) {
+            Reg.setScore(0);
+        } else if (Reg.getScore() > Reg.MAX_SCORE) {
+            Reg.setScore(Reg.MAX_SCORE);
         }
         this.ui.updateUI();
 
@@ -115,16 +115,16 @@ class PlayState extends FlxState
 
     private function updateSpawnThreshold():Void
     {
-        if (Reg.score <= 100) {
-            this.spawnThreshold = 0.5995;
-        } else if (Reg.score <= 250) {
+        if (Reg.getScore() <= 100) {
+            this.spawnThreshold = 0.995;
+        } else if (Reg.getScore() <= 250) {
             this.spawnThreshold = 0.99;
-        } else if (Reg.score <= 500) {
+        } else if (Reg.getScore() <= 500) {
             this.spawnThreshold = 0.98;
-        } else if (Reg.score <= 1000) {
+        } else if (Reg.getScore() <= 1000) {
             this.spawnThreshold = 0.96;
         } else {
-            this.spawnThreshold = 0.95;
+            this.spawnThreshold = 0.94;
         }
     }
 

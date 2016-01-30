@@ -29,6 +29,9 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
+        FlxG.worldBounds.width = 576;
+        FlxG.worldBounds.height = 1024;
+
 		this.background = new MenuMap();
 		this.background.screenCenter();
 		add(this.background);
