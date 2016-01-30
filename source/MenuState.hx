@@ -45,6 +45,8 @@ class MenuState extends FlxState
         this.students.y = 632 - 70;
 		add(this.students);
 
+        FlxG.sound.volume = 1.0;
+
         FlxG.sound.play("assets/sounds/seiza.wav");
         var timer = new FlxTimer();
         timer.start(3.0, mokuso);
@@ -58,6 +60,13 @@ class MenuState extends FlxState
 	 */
 	override public function destroy():Void
 	{
+        remove(this.background);
+        remove(this.player);
+        remove(this.students);
+        this.background = null;
+        this.player = null;
+        this.students = null;
+
 		super.destroy();
 	}
 

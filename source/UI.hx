@@ -24,6 +24,12 @@ class UI extends FlxTypedGroup<FlxSprite>
         });
     }
 
+    override public function destroy():Void
+    {
+        remove(this._score);
+        this._score = null;
+    }
+
     public function updateUI():Void
     {
         _score.text = Std.string(Reg.score);

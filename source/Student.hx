@@ -11,6 +11,9 @@ import flixel.plugin.MouseEventManager;
 import flixel.FlxG;
 import flixel.util.FlxAngle;
 using flixel.util.FlxSpriteUtil;
+import flixel.effects.particles.FlxEmitter;
+import flixel.FlxState;
+import flixel.util.FlxTimer;
 
 
 class Student extends FlxSpriteGroup
@@ -35,7 +38,11 @@ class Student extends FlxSpriteGroup
     private var dX:Float = 0.0;
     private var dY:Float = 0.0;
 
-    public function new(beltcolor:String, spawnTime:Int=-2, spawner:StudentSpawner=null)
+    // Death animation
+    private var flyingAni:FlxEmitter;
+    private var state:FlxState;
+
+    public function new(beltcolor:String, spawnTime:Int=-2, spawner:StudentSpawner=null, state:FlxState=null)
     {
         super();
         this.spawner = spawner;
@@ -53,6 +60,18 @@ class Student extends FlxSpriteGroup
 
         if (spawnTime > -2) {
             this.left = FlxRandom.intRanged(0, 1) == 1;
+        }
+
+        this.state = state;
+        flyingAni = new FlxEmitter();
+        flyingAni.setXSpeed( -1200, 1200);
+        flyingAni.setYSpeed( -1200, 0);
+        flyingAni.setRotation( -720, -720);
+        flyingAni.gravity = 800;
+        flyingAni.bounce = 0.35;
+        flyingAni.makeParticles("assets/images/" + this.beltcolor + "_whole_front_80.png", 1, 16, false, 0.0);
+        if (this.state != null) {
+            this.state.add(this.flyingAni);
         }
 
         MouseEventManager.add(this, onDown, onUp, null, null);
@@ -76,16 +95,20 @@ class Student extends FlxSpriteGroup
 
     private function onDown(Sprite:FlxSprite)
     {
-        if (this.beltcolor == "yellow" || this.beltcolor == "orange") {
-            this.mouseDown = true;
+        if (Sprite == this || Sprite == this.top || Sprite == this.bot) {
+            if (this.beltcolor == "yellow" || this.beltcolor == "orange") {
+                this.mouseDown = true;
+            }
         }
     }
 
     private function onUp(Sprite:FlxSprite)
     {
-        this.mouseDown = false;
-        this.numHits += 1;
-        FlxG.sound.play("assets/sounds/slap0" + Std.string(FlxRandom.intRanged(1, 3)) + ".wav");
+        if (Sprite == this || Sprite == this.top || Sprite == this.bot) {
+            this.mouseDown = false;
+            this.numHits += 1;
+            FlxG.sound.play("assets/sounds/slap0" + Std.string(FlxRandom.intRanged(1, 3)) + ".wav");
+        }
     }
 
     public function bow():Void
@@ -134,17 +157,14 @@ class Student extends FlxSpriteGroup
 
             if (this.spawner != null) {
                 if (this.y > 1024 + this.frameHeight) {
-                    trace("Out of bounds " + this);
                     Reg.score -= 10;
                     kill();
-                    this.spawner.remove(this);
                 }
                 if ((this.beltcolor == "yellow" && this.numHits >= 1)
                     || (this.beltcolor == "orange" && this.numHits >= 2)
                     || (this.beltcolor == "green" && this.numHits >= 3)
                     || (this.beltcolor == "blue" && this.numHits >= 4)
                     || (this.beltcolor == "brown" && this.numHits >= 5)) {
-                    trace("Killed " + this);
                     FlxG.sound.play("assets/sounds/kiai0" + Std.string(FlxRandom.intRanged(1, 8, [4])) + ".wav");
                     switch (this.beltcolor) {
                         case "yellow": Reg.score += 2;
@@ -154,8 +174,11 @@ class Student extends FlxSpriteGroup
                         case "brown": Reg.score += 50;
                         default:
                     }
+
+                    this.flyingAni.at(this);
+                    this.flyingAni.start(true, 5);
+
                     kill();
-                    this.spawner.remove(this);
                 }
             }
         }
@@ -180,8 +203,29 @@ class Student extends FlxSpriteGroup
         }
     }
 
-        override public function destroy():Void
+    override public function kill():Void
     {
+        this.alive = false;
+
+        var timer = new FlxTimer();
+        timer.start(5.0, function(t:FlxTimer):Void {
+            destroy();
+        });
+
+        super.kill();
+    }
+
+    override public function destroy():Void
+    {
+        if (this.state != null) {
+            this.state.remove(this.flyingAni);
+        }
+        if (this.spawner != null) {
+            this.spawner.remove(this);
+        }
+        this.top = null;
+        this.bot = null;
+        MouseEventManager.remove(this);
         super.destroy();
     }
 

@@ -33,6 +33,9 @@ class StudentManager extends FlxTypedSpriteGroup<Student>
 
     override public function destroy():Void
     {
+        for (stud in this.group.members) {
+            remove(stud);
+        }
         super.destroy();
     }
 

@@ -24,6 +24,11 @@ class MenuMap extends FlxSpriteGroup
 
     override public function destroy():Void
     {
+        remove(this.ground);
+        remove(this.wall);
+        this.ground = null;
+        this.wall = null;
+
         super.destroy();
     }
 

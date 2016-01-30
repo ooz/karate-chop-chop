@@ -10,7 +10,7 @@ import flixel.util.FlxAngle;
 
 class StreetMarker extends FlxSpriteGroup
 {
-    private var _top:FlxSprite;
+//    private var _top:FlxSprite;
     private var _bottom:FlxSprite;
 
     public var speed:Int = 7;
@@ -19,16 +19,16 @@ class StreetMarker extends FlxSpriteGroup
     {
         super();
 
-        _top = new FlxSprite();
+//        _top = new FlxSprite();
         _bottom = new FlxSprite();
 
-        _top.loadGraphic("assets/images/street_marker.png");
+//        _top.loadGraphic("assets/images/street_marker.png");
         _bottom.loadGraphic("assets/images/street_marker.png");
 
 //        add(_top);
         add(_bottom);
 
-        _top.y = -392;
+//        _top.y = -392;
     }
 
     override public function update():Void
@@ -43,6 +43,8 @@ class StreetMarker extends FlxSpriteGroup
 
     override public function destroy():Void
     {
+        remove(this._bottom);
+        this._bottom = null;
         super.destroy();
     }
 

@@ -33,6 +33,15 @@ class GameMap extends FlxSpriteGroup
 
     override public function destroy():Void
     {
+        remove(this.ground);
+        remove(this.streetMarker);
+        remove(this.sky);
+        remove(this.trees);
+        this.ground = null;
+        this.streetMarker = null;
+        this.sky = null;
+        this.trees = null;
+
         super.destroy();
     }
 

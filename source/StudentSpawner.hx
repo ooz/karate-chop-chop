@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.group.FlxTypedSpriteGroup;
 import flixel.util.FlxRandom;
@@ -15,15 +16,18 @@ class StudentSpawner extends FlxTypedSpriteGroup<Student>
         y = 0;
     }
 
-    public function spawn(beltcolor:String):Void
+    public function spawn(beltcolor:String, state:FlxState):Void
     {
-        var newStud = new Student(beltcolor, FlxRandom.intRanged(60, 120), this);
+        var newStud = new Student(beltcolor, FlxRandom.intRanged(0, 30), this, state);
         add(newStud);
         newStud.initializePosition();
     }
 
     override public function destroy():Void
     {
+        for (stud in this.group.members) {
+            remove(stud);
+        }
         super.destroy();
     }
 

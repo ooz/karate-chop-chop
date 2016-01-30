@@ -23,6 +23,8 @@ class PlayState extends FlxState
     private var spawner:StudentSpawner;
     private var ui:UI;
 
+    private var spawnThreshold:Float = 0.995;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -59,6 +61,14 @@ class PlayState extends FlxState
 	 */
 	override public function destroy():Void
 	{
+        remove(this.map);
+        remove(this.spawner);
+        remove(this.player);
+        remove(this.ui);
+        this.map = null;
+        this.spawner = null;
+        this.player = null;
+        this.ui = null;
 		super.destroy();
 	}
 
@@ -76,18 +86,18 @@ class PlayState extends FlxState
         }
 
         // Spawn students
-        if (FlxRandom.floatRanged(0.0, 1.0) > 0.995) {
+        if (FlxRandom.floatRanged(0.0, 1.0) > this.spawnThreshold) {
             var colorRand:Int = FlxRandom.intRanged(1, 10);
             if (colorRand > 6) {
-                this.spawner.spawn("yellow");
+                this.spawner.spawn("yellow", this);
             } else if (colorRand > 4) {
-                this.spawner.spawn("orange");
+                this.spawner.spawn("orange", this);
             } else if (colorRand > 3) {
-                this.spawner.spawn("green");
+                this.spawner.spawn("green", this);
             } else if (colorRand > 1) {
-                this.spawner.spawn("blue");
+                this.spawner.spawn("blue", this);
             } else if (colorRand > 0) {
-                this.spawner.spawn("brown");
+                this.spawner.spawn("brown", this);
             }
         }
 
@@ -98,8 +108,26 @@ class PlayState extends FlxState
         }
         this.ui.updateUI();
 
+        updateSpawnThreshold();
+
 		super.update();
 	}
+
+    private function updateSpawnThreshold():Void
+    {
+        if (Reg.score <= 100) {
+            this.spawnThreshold = 0.5995;
+        } else if (Reg.score <= 250) {
+            this.spawnThreshold = 0.99;
+        } else if (Reg.score <= 500) {
+            this.spawnThreshold = 0.98;
+        } else if (Reg.score <= 1000) {
+            this.spawnThreshold = 0.96;
+        } else {
+            this.spawnThreshold = 0.95;
+        }
+    }
+
     private function endGame(t:FlxTimer):Void {
         FlxG.switchState(new MenuState());
     }

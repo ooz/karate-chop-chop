@@ -26,6 +26,10 @@ class TreeManager extends FlxTypedSpriteGroup<Tree>
 
     override public function destroy():Void
     {
+        this.spawntimes = null;
+        for (tree in this.group.members) {
+            remove(tree);
+        }
         super.destroy();
     }
 

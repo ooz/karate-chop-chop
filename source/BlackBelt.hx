@@ -90,6 +90,9 @@ class BlackBelt extends FlxSpriteGroup
 
     override public function destroy():Void
     {
+        this.top = null;
+        this.bot = null;
+        MouseEventManager.remove(this);
         super.destroy();
     }
 
