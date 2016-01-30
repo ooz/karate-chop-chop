@@ -77,7 +77,7 @@ class MenuState extends FlxState
                 if (this.player.isFrontFacing) {
                     this.player.setBackFacing();
                     var turntimer = new FlxTimer();
-                    turntimer.start(1.0, sensei);
+                    turntimer.start(1.5, sensei);
                 } else {
                     var turntimer = new FlxTimer();
                     turntimer.start(2.0, kiritsu);
@@ -95,12 +95,14 @@ class MenuState extends FlxState
     private function mokuso(t:FlxTimer):Void {
         FlxG.sound.play("assets/sounds/mokuso.wav");
         this.shouldBow = false;
+        this.player.hasBowed = false;
         var timer = new FlxTimer();
         timer.start(3.0, mokusoYame);
     }
     private function mokusoYame(t:FlxTimer):Void {
         FlxG.sound.play("assets/sounds/mokuso_yame.wav");
         this.shouldBow = false;
+        this.player.hasBowed = false;
         var timer = new FlxTimer();
         timer.start(3.0, shomen);
     }
@@ -112,12 +114,14 @@ class MenuState extends FlxState
     private function kiritsu(t:FlxTimer):Void {
         FlxG.sound.play("assets/sounds/kiritsu.wav");
         this.shouldBow = false;
+        this.player.hasBowed = false;
         var timer = new FlxTimer();
         timer.start(3.0, hajime);
     }
     private function hajime(t:FlxTimer):Void {
         FlxG.sound.play("assets/sounds/hajime.wav");
         this.shouldBow = false;
+        this.player.hasBowed = false;
         var timer = new FlxTimer();
         timer.start(3.0, startGame);
     }
