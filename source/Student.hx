@@ -88,7 +88,7 @@ class Student extends FlxSpriteGroup
         this.dX = 0.0;
         this.dY = 0.0;
 //        this.scale.set(this.initialScale, this.initialScale);
-        this.y = 632 + 1 - this.top.frameHeight; // + this.height * (1.0 - scaleFactor) / 2.0;
+        this.y = 632 + 1 - this.height; // + this.height * (1.0 - scaleFactor) / 2.0;
     }
 
     public function bow():Void
@@ -101,11 +101,11 @@ class Student extends FlxSpriteGroup
         if (FlxG.mouse.justPressed)
         {
             if (FlxG.mouse.x >= this.x && (FlxG.mouse.x <= (this.x + this.width)) && FlxG.mouse.y >= this.y - 23 && (FlxG.mouse.y <= (this.y + this.height - 23))) {
-                if (this.beltcolor == "yellow"
-                    || this.beltcolor == "orange"
-                    || this.beltcolor == "green") {
+//                if (this.beltcolor == "yellow"
+//                    || this.beltcolor == "orange"
+//                    || this.beltcolor == "green") {
                     this.mouseDown = true;
-                }
+//                }
             }
 //            trace("SMouse: " + Std.string(FlxG.mouse.x) + " " + Std.string(FlxG.mouse.y));
 //            trace("SThiss: " + Std.string(this.x) + " " + Std.string(this.y) + " " + Std.string(this.width) + " " + Std.string(this.height));
@@ -167,7 +167,7 @@ class Student extends FlxSpriteGroup
                     || (this.beltcolor == "orange" && this.numHits >= 2)
                     || (this.beltcolor == "green" && this.numHits >= 2)
                     || (this.beltcolor == "blue" && this.numHits >= 3)
-                    || (this.beltcolor == "brown" && this.numHits >= 3)) {
+                    || (this.beltcolor == "brown" && this.numHits >= 4)) {
                     FlxG.sound.play("assets/sounds/kiai0" + Std.string(FlxRandom.intRanged(1, 8, [4])) + ".wav");
                     switch (this.beltcolor) {
                         case "yellow": Reg.addScore(2);
@@ -205,6 +205,11 @@ class Student extends FlxSpriteGroup
         } else if (dist > 0.0) {
             this.x -= dX / dist;
             this.y -= dY / dist;
+        }
+
+        // Be instant vulnerable if thrown in the air.
+        if (this.y < 460) {
+            this.numHits = 99;
         }
     }
 

@@ -80,9 +80,10 @@ class PlayState extends FlxState
         // Ending condition
         if (this.player.hasBowed) {
             this.player.hasBowed = false;
-            FlxG.sound.play("assets/sounds/yame.wav");
+
             var timer = new FlxTimer();
-            timer.start(3.0, endGame);
+            FlxG.sound.play("assets/sounds/yame.wav");
+            timer.start(2.5, endGame);
         }
 
         // Spawn students
@@ -123,6 +124,8 @@ class PlayState extends FlxState
             this.spawnThreshold = 0.98;
         } else if (Reg.getScore() <= 1000) {
             this.spawnThreshold = 0.96;
+        } else if (Reg.getScore() >= 31337) {
+            this.spawnThreshold = 0.85;
         } else {
             this.spawnThreshold = 0.94;
         }

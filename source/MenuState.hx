@@ -92,7 +92,7 @@ class MenuState extends FlxState
                     turntimer.start(1.5, sensei);
                 } else {
                     var turntimer = new FlxTimer();
-                    turntimer.start(2.0, kiritsu);
+                    turntimer.start(1.5, kiritsu);
                 }
             }
         }
