@@ -28,8 +28,8 @@ class Reg
 	 * Generic score variable that can be used for cross-state stuff.
 	 * Example usage: Storing the current score.
 	 */
-	private static var score:Int = 0;
-	private static var highScore:Int = 0;
+	private static var score:Int = 100;
+	private static var highScore:Int = 100;
 
 	public static function getScore() {
 		return score;
