@@ -8,7 +8,7 @@ class MenuMap extends FlxSpriteGroup
     private var ground:FlxSprite;
     private var wall:FlxSprite;
 
-    public function new()
+    public function new(wall:String="logo")
     {
         super();
 
@@ -18,7 +18,7 @@ class MenuMap extends FlxSpriteGroup
         add(this.ground);
 
         this.wall = new FlxSprite();
-        this.wall.loadGraphic("assets/images/logo.png");
+        this.wall.loadGraphic("assets/images/" + wall + ".png");
         add(this.wall);
     }
 

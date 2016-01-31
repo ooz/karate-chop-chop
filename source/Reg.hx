@@ -29,7 +29,7 @@ class Reg
 	 * Example usage: Storing the current score.
 	 */
 	private static var score:Int = 100;
-	private static var highScore:Int = 100;
+	private static var highScore:Int = score;
 
 	public static function getScore() {
 		return score;

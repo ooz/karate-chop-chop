@@ -125,13 +125,17 @@ class PlayState extends FlxState
         } else if (Reg.getScore() <= 1000) {
             this.spawnThreshold = 0.96;
         } else if (Reg.getScore() >= 31337) {
-            this.spawnThreshold = 0.85;
+            this.spawnThreshold = 0.75;
         } else {
             this.spawnThreshold = 0.94;
         }
     }
 
     private function endGame(t:FlxTimer):Void {
-        FlxG.switchState(new MenuState());
+        if (Reg.getScore() >= 31337) {
+            FlxG.switchState(new BonusState());
+        } else {
+            FlxG.switchState(new MenuState());
+        }
     }
 }
