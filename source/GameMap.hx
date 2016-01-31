@@ -9,6 +9,7 @@ class GameMap extends FlxSpriteGroup
     private var streetMarker:StreetMarker;
     private var sky:Sky;
     public var trees:TreeManager;
+    public var clouds:CloudManager;
 
     public function new()
     {
@@ -29,6 +30,9 @@ class GameMap extends FlxSpriteGroup
         this.trees.x = 0;
         this.trees.y = 0;
         add(this.trees);
+
+        this.clouds = new CloudManager();
+        add(this.clouds);
     }
 
     override public function destroy():Void
